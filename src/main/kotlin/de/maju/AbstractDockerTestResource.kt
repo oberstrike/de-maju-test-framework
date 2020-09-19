@@ -28,7 +28,7 @@ abstract class AbstractDockerTestResource : QuarkusTestResourceLifecycleManager 
 
         for (creator in listOfContainerCreator) {
             val config = creator.getConfig()
-            val container = creator.getContainer()
+            val container = creator.createContainer()
 
             if (!container.isRunning()) container.start()
 

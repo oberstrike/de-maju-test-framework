@@ -1,28 +1,22 @@
 package de.maju
 
-import de.maju.container.KeycloakContainerCreator
+import de.maju.container.keycloak.KeycloakDefaultContainerCreator
+import de.maju.container.postgres.PostgresContainerCreator
+import de.maju.container.postgres.PostgresInitHandler
+import de.maju.logging.DockerTestResourceLoggingHandler
 
-
-interface TestClient
 
 class DockerTestResource : AbstractDockerTestResource() {
 
-    class CustomConfig : KeycloakContainerCreator.KeycloakContainerConfig() {
-        override var port = 5555
-
-        override fun withConfig(): MutableMap<String, String> {
-            return mutableMapOf(
-                getQuarkusRestClientUrl(TestClient::class.java),
-                getQuarkusOIDCAuthServerUrlConfig()
-            )
-        }
-
-    }
-
+    private val loggingHandler = DockerTestResourceLoggingHandler()
 
     override val listOfContainerCreator = listOf(
-        KeycloakContainerCreator(
-            CustomConfig()
-        )
+        PostgresContainerCreator(),
+        KeycloakDefaultContainerCreator()
     )
+
+    override val listOfOnStartHandler: List<IOnStartHandler> = listOf(loggingHandler)
+
+    override val listOfOnStopHandler: List<IOnStopHandler> = listOf(loggingHandler)
+
 }
