@@ -1,7 +1,6 @@
 package de.maju
 
-import de.maju.container.keycloak.KeycloakDefaultContainerCreator
-import de.maju.container.postgres.PostgresContainerCreator
+import de.maju.container.postgres.PostgresContainerCreatorImpl
 import de.maju.container.postgres.PostgresInitHandler
 import de.maju.logging.DockerTestResourceLoggingHandler
 
@@ -10,9 +9,10 @@ class DockerTestResource : AbstractDockerTestResource() {
 
     private val loggingHandler = DockerTestResourceLoggingHandler()
 
+    private val postgresInitHandler = PostgresInitHandler.default()
+
     override val listOfContainerCreator = listOf(
-        PostgresContainerCreator(),
-        KeycloakDefaultContainerCreator()
+        PostgresContainerCreatorImpl(postgresInitHandler)
     )
 
     override val listOfOnStartHandler: List<IOnStartHandler> = listOf(loggingHandler)

@@ -1,16 +1,14 @@
 package de.maju.keycloak
 
 import dasniko.testcontainers.keycloak.KeycloakContainer
-import de.maju.container.keycloak.KeycloakDefaultContainerCreator
-import de.maju.container.keycloak.KeycloakDefaultHandler
+import de.maju.container.keycloak.KeycloakDefaultContainerCreatorImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class KeycloakContainerCreatorTest {
 
 
-    private val keycloakContainerCreator = KeycloakDefaultContainerCreator()
-
+    private val keycloakContainerCreator = KeycloakDefaultContainerCreatorImpl()
 
     @Test
     fun testDefaultConfig() {

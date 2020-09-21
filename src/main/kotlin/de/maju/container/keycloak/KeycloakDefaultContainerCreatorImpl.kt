@@ -5,11 +5,11 @@ import de.maju.container.AbstractContainerCreator
 import de.maju.container.IOnConfigCreatedHandler
 import de.maju.container.IOnContainerCreatedHandler
 
-val defaultKeycloakHandler = KeycloakDefaultHandler(
-    KeycloakDefaultHandler.default()
+private val defaultKeycloakHandler = KeycloakDefaultHandler(
+    KeycloakDefaultHandler.defaultConfig()
 )
 
-class KeycloakDefaultContainerCreator() :
+class KeycloakDefaultContainerCreatorImpl() :
     AbstractContainerCreator<KeycloakContainer>() {
 
     override val container: KeycloakContainer = KeycloakContainer("quay.io/keycloak/keycloak:latest")
@@ -18,4 +18,15 @@ class KeycloakDefaultContainerCreator() :
 
     override val onConfigCreatedHandlers: List<IOnConfigCreatedHandler<KeycloakContainer>> = listOf(defaultKeycloakHandler)
 
+}
+
+
+private val newKeycloakHandler = object : IKeycloakDefaultHandler {
+    override fun withConfig(): MutableMap<String, String> {
+        TODO("Not yet implemented")
+    }
+
+    override fun onContainerCreated(container: KeycloakContainer) {
+        TODO("Not yet implemented")
+    }
 }

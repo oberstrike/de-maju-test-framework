@@ -32,7 +32,7 @@ class KeycloakDefaultHandler(
         //   "/imports/realm-export.json"
         private const val KEYCLOAK_PORT = 8181
 
-        fun default(
+        fun defaultConfig(
             realmName: String = REALM_NAME,
             adminUsername: String = ADMIN_USERNAME,
             adminPassword: String = ADMIN_PASSWORD,

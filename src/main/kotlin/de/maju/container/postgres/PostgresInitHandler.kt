@@ -19,13 +19,15 @@ class PostgresInitHandler(
             dbName: String = DB_NAME,
             username: String = USERNAME,
             password: String = PASSWORD,
-            port: Int = PORT
+            port: Int = PORT,
+            initScriptPath: String? = null
         ) = PostgresInitHandler(
             object : IPostgresDefaultConfig {
                 override var dbName: String = dbName
                 override var password: String = password
                 override var username: String = username
                 override var port: Int = port
+                override var initScriptPath: String? = initScriptPath
             }
         )
     }
@@ -36,6 +38,8 @@ class PostgresInitHandler(
             withUsername(defaultConfig.username)
             withPassword(defaultConfig.password)
             withExposedPorts(defaultConfig.port)
+            if (defaultConfig.initScriptPath != null)
+                withInitScript(defaultConfig.initScriptPath)
             withCreateContainerCmdModifier { cmd ->
                 cmd.withHostConfig(
                     HostConfig.newHostConfig().withPortBindings(
@@ -51,5 +55,6 @@ class PostgresInitHandler(
         var password: String
         var port: Int
         var dbName: String
+        var initScriptPath: String?
     }
 }

@@ -9,20 +9,22 @@ const val postgresContainerName = "postgres"
 
 class KPostgreSQLContainer : PostgreSQLContainer<KPostgreSQLContainer>(postgresContainerName)
 
-val defaultPostgresHandler = PostgresInitHandler.default()
+private val defaultPostgresHandler = PostgresInitHandler.default()
 
-class PostgresContainerCreator() :
+class PostgresContainerCreatorImpl(
+    postgresInitHandler: PostgresInitHandler = defaultPostgresHandler
+) :
     AbstractContainerCreator<KPostgreSQLContainer>() {
 
     override val container: KPostgreSQLContainer = KPostgreSQLContainer()
 
     override val onContainersCreatedHandlers: List<IOnContainerCreatedHandler<KPostgreSQLContainer>> = listOf(
-        defaultPostgresHandler
+        postgresInitHandler
     )
 
-    override val onConfigCreatedHandlers: List<IOnConfigCreatedHandler<KPostgreSQLContainer>> = listOf()
+    override val onConfigCreatedHandlers: List<IOnConfigCreatedHandler<KPostgreSQLContainer>> = listOf(
 
-
+    )
 
 
 }
